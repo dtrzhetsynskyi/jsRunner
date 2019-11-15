@@ -3,11 +3,11 @@
 	"publisher": "ZolarDev",
 	"displayName": "jsRunner",
 	"repository": {
-      "type": "git",
-      "url": "https://github.com/zolarSource/jsRunner.git"
-  },
+		"type": "git",
+		"url": "https://github.com/zolarSource/jsRunner.git"
+	},
 	"description": "Runs js with node.js in terminal",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"engines": {
 		"vscode": "^1.40.0"
 	},
@@ -26,11 +26,13 @@
 			}
 		],
 		"menus": {
-			"explorer/context": [{
-				"when": "resourceLangId == javascript",
-				"command": "extension.jsRunner",
-				"group": "jsRunner"
-			}]
+			"explorer/context": [
+				{
+					"when": "resourceLangId == javascript",
+					"command": "extension.jsRunner",
+					"group": "jsRunner"
+				}
+			]
 		}
 	},
 	"scripts": {
