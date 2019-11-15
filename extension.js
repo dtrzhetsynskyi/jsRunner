@@ -8,10 +8,15 @@ function activate(context) {
 	let disposable = vscode.commands.registerCommand('extension.jsRunner', function () {
 		const currentlyOpenTabfilePath = vscode.window.activeTextEditor.document.fileName;
 		const currentlyOpenTabfileName = path.basename(currentlyOpenTabfilePath);
-		const terminal = vscode.window.createTerminal(`Js runner extension`);
+		const currentlyOpenTabfileDirectory = path.relative(
+			vscode.workspace.workspaceFolders[0].uri.fsPath, 
+			path.dirname(currentlyOpenTabfilePath)
+		);
+		const terminal = vscode.window.createTerminal('Js runner extension');
 
+		// vscode.window.showInformationMessage(`${currentlyOpenTabfileDirectory}`);
 		terminal.show();
-		terminal.sendText(`node ${currentlyOpenTabfileName}`);
+		terminal.sendText(`${currentlyOpenTabfileDirectory && `cd ${currentlyOpenTabfileDirectory} &&`} node ${currentlyOpenTabfileName}`);
 	});
 
 	context.subscriptions.push(disposable);
