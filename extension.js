@@ -5,27 +5,40 @@ const path = require('path');
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-	let disposable = vscode.commands.registerCommand('extension.jsRunner', function () {
-		const currentlyOpenTabfilePath = vscode.window.activeTextEditor.document.fileName;
-		const currentlyOpenTabfileName = path.basename(currentlyOpenTabfilePath);
-		const currentlyOpenTabfileDirectory = path.relative(
-			vscode.workspace.workspaceFolders[0].uri.fsPath, 
-			path.dirname(currentlyOpenTabfilePath)
-		);
-		const terminal = vscode.window.createTerminal('Js runner extension');
+  let disposable = vscode.commands.registerCommand(
+    'extension.jsRunner',
+    function() {
+      const openedTerminal = vscode.window.terminals.find(
+        terminal => terminal.name === 'Js runner extension'
+      );
+      const activeFilePath =
+        vscode.window.activeTextEditor.document.fileName;
+      const activateFileName = path.basename(activeFilePath);
+      const activeFileFolder = path.relative(
+        vscode.workspace.workspaceFolders[0].uri.fsPath,
+        path.dirname(activeFilePath)
+      );
 
-		// vscode.window.showInformationMessage(`${currentlyOpenTabfileDirectory}`);
-		terminal.show();
-		terminal.sendText(`${currentlyOpenTabfileDirectory && `cd ${currentlyOpenTabfileDirectory} &&`} node ${currentlyOpenTabfileName}`);
-	});
+      if (openedTerminal) {
+        openedTerminal.sendText(`node ${activateFileName}`);
+      } else {
+        const terminal = vscode.window.createTerminal('Js runner extension');
+        terminal.show();
+        terminal.sendText(
+          `${activeFileFolder &&
+            `cd ${activeFileFolder} &&`} node ${activateFileName}`
+        );
+      }
+    }
+  );
 
-	context.subscriptions.push(disposable);
+  context.subscriptions.push(disposable);
 }
 exports.activate = activate;
 
 function deactivate() {}
 
 module.exports = {
-	activate,
-	deactivate
-}
+  activate,
+  deactivate
+};

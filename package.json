@@ -1,5 +1,6 @@
 {
 	"name": "js-runner",
+	"logo": "images/logo.png",
 	"publisher": "ZolarDev",
 	"displayName": "jsRunner",
 	"repository": {
