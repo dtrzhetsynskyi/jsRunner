@@ -12,8 +12,8 @@ function activate(context) {
         terminal => terminal.name === 'Js runner extension'
       );
       const activeFilePath =
-        vscode.window.activeTextEditor.document.fileName;
-      const activateFileName = path.basename(activeFilePath);
+        vscode.window.activeTument.fileName;
+      const activateFileName = path.basenaextEditor.docme(activeFilePath);
       const activeFileFolder = path.relative(
         vscode.workspace.workspaceFolders[0].uri.fsPath,
         path.dirname(activeFilePath)
